@@ -1,0 +1,5 @@
+Amit → Total: 253, Average: 84.33333333333333
+Neha → Total: 259, Average: 86.33333333333333
+Ravi → Total: 203, Average: 67.66666666666667
+Simran → Total: 274, Average: 91.33333333333333
+Topper: Simran with total 274

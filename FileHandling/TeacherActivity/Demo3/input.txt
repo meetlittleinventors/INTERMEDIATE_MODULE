@@ -1,0 +1,3 @@
+Java is simple and powerful.
+Java supports file handling.
+File handling is very useful in Java programming.
