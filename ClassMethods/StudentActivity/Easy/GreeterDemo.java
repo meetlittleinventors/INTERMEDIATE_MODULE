@@ -1,13 +1,19 @@
-class Greeter {
-    void sayHello(String name) {
-        System.out.println("Hello, " + name + "!");
+class Demo {
+    // Instance method
+    void display() {
+        System.out.println("This is an Instance Method");
+    }
+
+    // Static method
+    static void show() {
+        System.out.println("This is a Static Method");
     }
 }
 
-public class GreeterDemo {
+public class Main {
     public static void main(String[] args) {
-        Greeter g = new Greeter();
-        g.sayHello("Amit");
-        g.sayHello("Neha");
+        Demo d = new Demo();
+        d.display();   // instance method
+        Demo.show();   // static method
     }
 }
