@@ -1,4 +1,4 @@
-public class RowSum {
+public class Diagonal {
     public static void main(String[] args) {
         int[][] matrix = {
             {1, 2, 3},
@@ -6,12 +6,9 @@ public class RowSum {
             {7, 8, 9}
         };
 
+        System.out.println("Main diagonal:");
         for (int i = 0; i < matrix.length; i++) {
-            int sum = 0;
-            for (int j = 0; j < matrix[i].length; j++) {
-                sum += matrix[i][j];
-            }
-            System.out.println("Sum of row " + (i+1) + " = " + sum);
+            System.out.print(matrix[i][i] + " ");
         }
     }
 }
