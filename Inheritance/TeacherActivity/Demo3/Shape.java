@@ -1,24 +1,30 @@
+// Hierarchical Inheritance Example
 class Shape {
     void area() {
-        System.out.println("Area depends on shape");
+        System.out.println("Calculating area...");
     }
 }
+
 class Circle extends Shape {
-    void area() {
+    void circleArea() {
         System.out.println("Area of Circle = πr²");
     }
 }
+
 class Rectangle extends Shape {
-    void area() {
+    void rectangleArea() {
         System.out.println("Area of Rectangle = l × b");
     }
 }
 
-public class Test {
+public class Main {
     public static void main(String[] args) {
-        Shape s1 = new Circle();
-        Shape s2 = new Rectangle();
-        s1.area();
-        s2.area();
+        Circle c = new Circle();
+        c.area();
+        c.circleArea();
+
+        Rectangle r = new Rectangle();
+        r.area();
+        r.rectangleArea();
     }
 }
