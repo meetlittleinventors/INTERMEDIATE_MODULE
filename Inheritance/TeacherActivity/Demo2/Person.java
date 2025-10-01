@@ -1,18 +1,27 @@
+// Multilevel Inheritance Example
 class Person {
-    void speak() { System.out.println("Person can speak"); }
-}
-class Employee extends Person {
-    void work() { System.out.println("Employee is working"); }
-}
-class Manager extends Employee {
-    void manage() { System.out.println("Manager is managing team"); }
+    void displayPerson() {
+        System.out.println("I am a Person.");
+    }
 }
 
-public class Test {
+class Employee extends Person {
+    void displayEmployee() {
+        System.out.println("I am an Employee.");
+    }
+}
+
+class Manager extends Employee {
+    void displayManager() {
+        System.out.println("I am a Manager.");
+    }
+}
+
+public class Main {
     public static void main(String[] args) {
         Manager m = new Manager();
-        m.speak();
-        m.work();
-        m.manage();
+        m.displayPerson();
+        m.displayEmployee();
+        m.displayManager();
     }
 }
