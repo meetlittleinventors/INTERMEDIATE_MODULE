@@ -1,30 +1,20 @@
+// Single Inheritance Example
 class Vehicle {
-    String brand;
-    int speed;
-
-    Vehicle(String brand, int speed) {
-        this.brand = brand;
-        this.speed = speed;
-    }
-
     void showInfo() {
-        System.out.println("Brand: " + brand + ", Speed: " + speed);
+        System.out.println("This is a Vehicle.");
     }
 }
 
-class Car extends Vehicle {
-    Car(String brand, int speed) {
-        super(brand, speed);
-    }
+class Car extends Vehicle {   // Single Inheritance
     void openTrunk() {
-        System.out.println("Trunk is open!");
+        System.out.println("Car trunk opened.");
     }
 }
 
-public class Test {
+public class Main {
     public static void main(String[] args) {
-        Car c = new Car("BMW", 120);
-        c.showInfo();
-        c.openTrunk();
+        Car myCar = new Car();
+        myCar.showInfo();
+        myCar.openTrunk();
     }
 }
