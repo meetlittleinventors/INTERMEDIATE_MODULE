@@ -1,114 +1,95 @@
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
 import java.io.*;
 import java.util.*;
 
-public class SmartToDoList extends Application {
-
-    private ListView<String> taskListView;
-    private TextField taskField;
-    private final String FILE_NAME = "tasks.txt";
-    private final List<String> tasks = new ArrayList<>();
-
-    @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Smart To-Do List");
-
-        // UI Elements
-        taskField = new TextField();
-        taskField.setPromptText("Enter a task");
-
-        Button addButton = new Button("Add Task");
-        Button deleteButton = new Button("Delete Task");
-
-        taskListView = new ListView<>();
-
-        // Load tasks from file at startup
-        loadTasksFromFile();
-
-        // Add Task Action
-        addButton.setOnAction(e -> addTask());
-
-        // Delete Task Action
-        deleteButton.setOnAction(e -> deleteTask());
-
-        // Layout
-        HBox inputBox = new HBox(10, taskField, addButton, deleteButton);
-        VBox layout = new VBox(10, inputBox, taskListView);
-        layout.setStyle("-fx-padding: 20; -fx-font-size: 14;");
-
-        primaryStage.setScene(new Scene(layout, 400, 400));
-        primaryStage.show();
-    }
-
-    private void addTask() {
-        String task = taskField.getText().trim();
-        if (task.isEmpty()) {
-            showAlert("Please enter a valid task!");
-            return;
-        }
-
-        tasks.add(task);
-        taskListView.getItems().add(task);
-        saveTasksToFile();
-        taskField.clear();
-    }
-
-    private void deleteTask() {
-        String selectedTask = taskListView.getSelectionModel().getSelectedItem();
-        if (selectedTask == null) {
-            showAlert("Please select a task to delete!");
-            return;
-        }
-
-        tasks.remove(selectedTask);
-        taskListView.getItems().remove(selectedTask);
-        saveTasksToFile();
-    }
-
-    private void loadTasksFromFile() {
-        File file = new File(FILE_NAME);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                showAlert("Error creating task file!");
-            }
-        }
-
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                tasks.add(line);
-            }
-            taskListView.getItems().addAll(tasks);
-        } catch (IOException e) {
-            showAlert("Error loading tasks!");
-        }
-    }
-
-    private void saveTasksToFile() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))) {
-            for (String t : tasks) {
-                bw.write(t);
-                bw.newLine();
-            }
-        } catch (IOException e) {
-            showAlert("Error saving tasks!");
-        }
-    }
-
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+public class SmartToDoList {
+    static final String FILE_NAME = "tasks.txt";
+    static ArrayList<String> tasks = new ArrayList<>();
 
     public static void main(String[] args) {
-        launch(args);
+        loadTasks();
+
+        Scanner sc = new Scanner(System.in);
+        int choice = 0;
+
+        while (choice != 4) {
+            System.out.println("\n--- Smart To-Do List ---");
+            System.out.println("1. Add Task");
+            System.out.println("2. View Tasks");
+            System.out.println("3. Delete Task");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            try {
+                choice = Integer.parseInt(sc.nextLine());
+                switch (choice) {
+                    case 1 -> addTask(sc);
+                    case 2 -> viewTasks();
+                    case 3 -> deleteTask(sc);
+                    case 4 -> System.out.println("Goodbye!");
+                    default -> System.out.println("Invalid choice!");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input! Please enter a number.");
+            }
+        }
+    }
+
+    static void loadTasks() {
+        try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+            while ((line = br.readLine()) != null) tasks.add(line);
+        } catch (FileNotFoundException e) {
+            System.out.println("(No existing task file found, will create one later)");
+        } catch (IOException e) {
+            System.out.println("Error loading tasks!");
+        }
+    }
+
+    static void saveTasks() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))) {
+            for (String task : tasks) bw.write(task + "\n");
+        } catch (IOException e) {
+            System.out.println("Error saving tasks!");
+        }
+    }
+
+    static void addTask(Scanner sc) {
+        System.out.print("Enter new task: ");
+        String task = sc.nextLine().trim();
+        if (task.isEmpty()) {
+            System.out.println("Please enter a valid task!");
+            return;
+        }
+        tasks.add(task);
+        saveTasks();
+        System.out.println("Task added successfully!");
+    }
+
+    static void viewTasks() {
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks to show.");
+            return;
+        }
+        System.out.println("\nYour Tasks:");
+        for (int i = 0; i < tasks.size(); i++)
+            System.out.println((i + 1) + ". " + tasks.get(i));
+    }
+
+    static void deleteTask(Scanner sc) {
+        viewTasks();
+        if (tasks.isEmpty()) return;
+        try {
+            System.out.print("Enter task number to delete: ");
+            int num = Integer.parseInt(sc.nextLine());
+            if (num < 1 || num > tasks.size()) {
+                System.out.println("Invalid task number!");
+                return;
+            }
+            tasks.remove(num - 1);
+            saveTasks();
+            System.out.println("Task deleted successfully!");
+        } catch (Exception e) {
+            System.out.println("Please enter a valid number!");
+        }
     }
 }
