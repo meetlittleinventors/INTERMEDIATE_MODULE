@@ -1,0 +1,64 @@
+import java.util.*;
+
+class Student {
+    String id;
+    String name;
+    double marks1, marks2, marks3;
+    double total, average;
+    char grade;
+
+    Student(String id, String name, double m1, double m2, double m3) {
+        this.id = id;
+        this.name = name;
+        this.marks1 = m1;
+        this.marks2 = m2;
+        this.marks3 = m3;
+        calculate();
+    }
+
+    void calculate() {
+        total = marks1 + marks2 + marks3;
+        average = total / 3.0;
+
+        if (average >= 90) grade = 'A';
+        else if (average >= 75) grade = 'B';
+        else if (average >= 60) grade = 'C';
+        else if (average >= 40) grade = 'D';
+        else grade = 'F';
+    }
+
+    void display() {
+        System.out.println("ID: " + id + ", Name: " + name +
+                ", Total: " + total + ", Avg: " + average + ", Grade: " + grade);
+    }
+}
+
+public class StudentGradeManager {
+    static ArrayList<Student> students = new ArrayList<>();
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        while (true) {
+            System.out.println("\n===== Student Grade Manager =====");
+            System.out.println("1. Add Student");
+            System.out.println("2. Display All Students");
+            System.out.println("3. Show Top Student");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+            sc.nextLine(); // consume newline
+
+            switch (choice) {
+                case 1:
+                    addStudent(sc);
+                    break;
+                case 2:
+                    displayStudents();
+                    break;
+                case 3:
+                    showTopStudent();
+                    break;
+                case 4:
+                    System.out.println("Exiting the system. G
