@@ -61,4 +61,59 @@ public class StudentGradeManager {
                     showTopStudent();
                     break;
                 case 4:
-                    System.out.println("Exiting the system. G
+                    System.out.println("Exiting the system. Goodbye!");
+                    sc.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+            }
+        }
+    }
+
+    // Add new student
+    public static void addStudent(Scanner sc) {
+        System.out.print("Enter Student ID: ");
+        String id = sc.nextLine();
+        System.out.print("Enter Name: ");
+        String name = sc.nextLine();
+        System.out.print("Enter Marks in Subject 1: ");
+        double m1 = sc.nextDouble();
+        System.out.print("Enter Marks in Subject 2: ");
+        double m2 = sc.nextDouble();
+        System.out.print("Enter Marks in Subject 3: ");
+        double m3 = sc.nextDouble();
+
+        students.add(new Student(id, name, m1, m2, m3));
+        System.out.println("✅ Student added successfully!");
+    }
+
+    // Display all students
+    public static void displayStudents() {
+        if (students.isEmpty()) {
+            System.out.println("No student records found!");
+        } else {
+            System.out.println("\n--- Student Records ---");
+            for (Student s : students) {
+                s.display();
+            }
+        }
+    }
+
+    // Show top student based on average
+    public static void showTopStudent() {
+        if (students.isEmpty()) {
+            System.out.println("No student records found!");
+            return;
+        }
+
+        Student top = students.get(0);
+        for (Student s : students) {
+            if (s.average > top.average) {
+                top = s;
+            }
+        }
+
+        System.out.println("\n🏆 Top Student:");
+        top.display();
+    }
+}
